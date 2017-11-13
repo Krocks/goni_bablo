@@ -23,20 +23,28 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //KOTLIN
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    //Support
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //TEST
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-//    Architecture
-    implementation "android.arch.lifecycle:runtime:1.0.3" //Lifecycle
-    implementation "android.arch.lifecycle:extensions:1.0.0" //LiveData, ViewModel
-    implementation "android.arch.persistence.room:runtime:1.0.0" //Room
-
+    //    Architecture
+    implementation 'android.arch.lifecycle:runtime:1.0.3'
+    //Lifecycle
+    implementation 'android.arch.lifecycle:extensions:1.0.0'
+    //LiveData, ViewModel
+    implementation 'android.arch.persistence.room:runtime:1.0.0'
+    //Room
     //logging
     implementation 'com.jakewharton.timber:timber:4.6.0'
+    //DI
+    implementation 'com.google.dagger:dagger-android-support:2.11'
 }
