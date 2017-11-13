@@ -36,13 +36,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+
     //    Architecture
-    implementation 'android.arch.lifecycle:runtime:1.0.3'
-    //Lifecycle
-    implementation 'android.arch.lifecycle:extensions:1.0.0'
-    //LiveData, ViewModel
-    implementation 'android.arch.persistence.room:runtime:1.0.0'
-    //Room
+    implementation 'android.arch.lifecycle:runtime:1.0.3' //Lifecycle
+    implementation 'android.arch.lifecycle:extensions:1.0.0' //LiveData, ViewModel
+    implementation 'android.arch.persistence.room:runtime:1.0.0' //Room
+
     //logging
     implementation 'com.jakewharton.timber:timber:4.6.0'
     //DI
