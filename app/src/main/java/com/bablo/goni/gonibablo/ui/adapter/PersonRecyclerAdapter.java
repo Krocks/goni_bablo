@@ -20,9 +20,11 @@ import butterknife.ButterKnife;
 
 public class PersonRecyclerAdapter extends RecyclerView.Adapter {
     private List<Person> people;
+    private IPersonCallback callback;
 
-    public PersonRecyclerAdapter(List<Person> people) {
+    public PersonRecyclerAdapter(List<Person> people, IPersonCallback callback) {
         this.people = people;
+        this.callback = callback;
     }
 
     @Override
@@ -32,13 +34,29 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((PersonVh)holder).name.setText(people.get(position).getName());
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if (position < people.size()) {
+            ((PersonVh) holder).name.setText(people.get(position).getName());
+            ((PersonVh) holder).name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.selectPerson(people.get(holder.getAdapterPosition()));
+                }
+            });
+        } else {
+            ((PersonVh) holder).name.setText(R.string.add);
+            ((PersonVh) holder).name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.addPerson();
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return people.size();
+        return people.size() + 1;
     }
 
 

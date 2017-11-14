@@ -20,9 +20,11 @@ import butterknife.ButterKnife;
 
 public class ItemRecyclerAdapter extends RecyclerView.Adapter {
     private List<Item> items;
+    private IItemCallback callback;
 
-    public ItemRecyclerAdapter(List<Item> items) {
+    public ItemRecyclerAdapter(List<Item> items, IItemCallback callback) {
         this.items = items;
+        this.callback = callback;
     }
 
     @Override
@@ -32,13 +34,29 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ItemVH) holder).name.setText(items.get(position).getName());
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if (position < items.size()) {
+            ((ItemVH) holder).name.setText(items.get(position).getName());
+            ((ItemVH) holder).name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.selectItem(items.get(holder.getAdapterPosition()));
+                }
+            });
+        } else {
+            ((ItemVH) holder).name.setText(R.string.add);
+            ((ItemVH) holder).name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.addItem();
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items.size() + 1;
     }
 
     class ItemVH extends RecyclerView.ViewHolder{
