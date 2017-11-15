@@ -13,8 +13,8 @@ fun getSampleSession ():Session{
     val items = ArrayList<Item>()
     val people = ArrayList<Person>()
     for (i in 0..MAX) {
-        val item = Item("Item" + i, "Item" + i, ArrayList())
-        val person = Person("Person" + i, "Person" + i, ArrayList())
+        val item = Item("Item" + i, "Item" + i, ArrayList(), 5f)
+        val person = Person("Person" + i, "Person" + i, ArrayList(), 3f)
         item.addPerson(person)
         items.add(item)
         person.addItem(item)

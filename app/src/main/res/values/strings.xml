@@ -9,4 +9,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add">ADD</string>
+    <string name="name">Name</string>
+    <string name="cost">Cost</string>
+    <string name="ok">OK</string>
+    <string name="no">Nope</string>
+    <string name="item">Item</string>
+    <string name="people">People</string>
+    <string name="count">Count</string>
 </resources>

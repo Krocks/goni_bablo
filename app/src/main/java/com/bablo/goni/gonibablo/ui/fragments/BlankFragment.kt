@@ -19,6 +19,7 @@ import com.bablo.goni.gonibablo.ui.adapter.IItemCallback
 import com.bablo.goni.gonibablo.ui.adapter.IPersonCallback
 import com.bablo.goni.gonibablo.ui.adapter.ItemRecyclerAdapter
 import com.bablo.goni.gonibablo.ui.adapter.PersonRecyclerAdapter
+import com.bablo.goni.gonibablo.ui.dialog.DialogUtil
 import kotlinx.android.synthetic.main.fragment_list.*
 import java.util.ArrayList
 
@@ -55,7 +56,13 @@ class BlankFragment : Fragment() {
         val itemsRecycle = view.findViewById<RecyclerView>(R.id.items)
         val adapter = ItemRecyclerAdapter(items, object : IItemCallback {
             override fun addItem() {
-                Toast.makeText(context, "ADD ITEM", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "ADD ITEM", Toast.LENGTH_LONG).show()
+//                DialogUtil.getItemAddDialog(context, { name, price -> Toast.makeText(context, "Price $name ,name $name", Toast.LENGTH_SHORT).show() })
+                DialogUtil.getItemAddDialog(context, object : DialogUtil.OnDialogItemAdd{
+                    override fun onItemAdd(name: String, price: Float?) {
+                        Toast.makeText(context, "Price $name ,name $name", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
 
             override fun selectItem(item: Item) {
