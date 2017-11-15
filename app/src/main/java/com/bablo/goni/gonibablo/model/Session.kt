@@ -14,7 +14,7 @@ fun getSampleSession ():Session{
     val people = ArrayList<Person>()
     for (i in 0..MAX) {
         val item = Item("Item" + i, "Item" + i, ArrayList(), 5f)
-        val person = Person("Person" + i, "Person" + i, ArrayList(), 3f)
+        val person = Person("Person" + i, "Person" + i, ArrayList())
         item.addPerson(person)
         items.add(item)
         person.addItem(item)
@@ -33,4 +33,18 @@ fun getSampleSession ():Session{
     session = Session("ID", "Name", people, items)
     return session
 }
-data class Session(val id: String, var name: String, val people: List<Person>, val items: List<Item>) : Serializable
+data class Session(val id: String, var name: String, val people: List<Person>, val items: List<Item>) : Serializable{
+    fun add (item: Item, person: Person){
+        item.addPerson(person)
+        person.addItem(item)
+    }
+
+    fun finalCountdown(){ //ta da da, it's a final countdown
+        for (item in items){
+            val perPerson = item.price / item.people.size
+            for (person in item.people){
+                person.owe = person.owe + perPerson
+            }
+        }
+    }
+}
