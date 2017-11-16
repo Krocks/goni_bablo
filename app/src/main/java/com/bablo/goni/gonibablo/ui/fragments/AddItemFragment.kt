@@ -40,7 +40,6 @@ class AddItemFragment : Fragment() {
         val session = getSession()
         val layoutForPople = view!!.findViewById<LinearLayout>(R.id.add_item_layout)
         for (person in session.people) {
-//            val personLayout = View.inflate(context, R.layout.view_add_item_person, layoutForPople)
             val personLayout = layoutInflater.inflate(R.layout.view_add_item_person, layoutForPople, false)
             val tvName = personLayout!!.findViewById<TextView>(R.id.add_item_person_name)
             tvName.text = person.name
@@ -61,7 +60,6 @@ class AddItemFragment : Fragment() {
         for (person in session.people) {
             val personsLayout = map[person]
             val checkBox = personsLayout!!.findViewById<CheckBox>(R.id.add_item_person_checkbox)
-//            val personPayed = personsLayout!!.findViewById<EditText>(R.id.add_item_person_add_money).text.toString().toFloat()
             val personPayed = getFloatEditText(person)
             if (checkBox.isChecked) {
                 session.connect(item, person)
@@ -72,15 +70,9 @@ class AddItemFragment : Fragment() {
 
     private fun checkSum(session: Session): Boolean {
         val sum = view!!.findViewById<EditText>(R.id.add_item_price).text.toString().toFloat()
-        var enteredSum = 0f
-        for (person in session.people) {
-            var personSum = getFloatEditText(person)
-//            if (map[person]!!.findViewById<EditText>(R.id.add_item_person_add_money).text.toString().isNotEmpty()) {
-//                personSum = map[person]!!.findViewById<EditText>(R.id.add_item_person_add_money).text.toString().toFloat()
-//            }
-
-            enteredSum += personSum
-        }
+        val enteredSum = session.people
+                .map { getFloatEditText(it) }
+                .sum()
         if (sum != enteredSum) {
             wrongSum()
             return false
@@ -93,14 +85,6 @@ class AddItemFragment : Fragment() {
     }
 
     private fun getFloatEditText(person: Person): Float {
-        if (map[person] == null) {
-            Timber.e("map by person null") //WTF ????
-        }
-        if (map[person]!!.findViewById<EditText>(R.id.add_item_person_add_money) == null) Timber.e("find by id null")
-        if (map[person]!!.findViewById<EditText>(R.id.add_item_person_add_money).text == null) {
-            Timber.e("text null")
-        }
-
         if (map[person]!!.findViewById<EditText>(R.id.add_item_person_add_money).text.toString().isNotEmpty()) {
             return map[person]!!.findViewById<EditText>(R.id.add_item_person_add_money).text.toString().toFloat()
         }
