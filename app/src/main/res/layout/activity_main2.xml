@@ -6,7 +6,7 @@
     tools:context="com.bablo.goni.gonibablo.ui.MainActivity">
 
     <fragment
-        android:name="com.bablo.goni.gonibablo.ui.fragments.BlankFragment"
+        android:name="com.bablo.goni.gonibablo.ui.fragments.AddItemFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/blank_fragment_test"/>

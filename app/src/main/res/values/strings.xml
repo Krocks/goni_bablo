@@ -16,4 +16,5 @@
     <string name="item">Item</string>
     <string name="people">People</string>
     <string name="count">Count</string>
+    <string name="wrong_sum">Wrong sum entered, sum should same as item price</string>
 </resources>

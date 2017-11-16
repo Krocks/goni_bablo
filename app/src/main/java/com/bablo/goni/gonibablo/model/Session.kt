@@ -2,6 +2,7 @@ package com.bablo.goni.gonibablo.model
 
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Serhii_Bondarenko3 on 13-Nov-17.
@@ -33,18 +34,30 @@ fun getSampleSession ():Session{
     session = Session("ID", "Name", people, items)
     return session
 }
-data class Session(val id: String, var name: String, val people: List<Person>, val items: List<Item>) : Serializable{
+data class Session(val id: String, var name: String, val people: ArrayList<Person>, val items: ArrayList<Item>) : Serializable{
     fun add (item: Item, person: Person){
         item.addPerson(person)
         person.addItem(item)
     }
 
-    fun finalCountdown(){ //ta da da, it's a final countdown
-        for (item in items){
-            val perPerson = item.price / item.people.size
-            for (person in item.people){
-                person.owe = person.owe + perPerson
-            }
-        }
+//    fun finalCountdown(){ //ta da da, it's a final countdown
+//        for (item in items){
+//            val perPerson = item.price / item.people.size
+//            for (person in item.people){
+//                person.owe = person.owe + perPerson
+//            }
+//        }
+//    }
+
+    fun connect(item: Item, person: Person){
+        item.addPerson(person)
+        person.addItem(item)
     }
+
+    fun disconnect(item: Item, person: Person){
+        item.removePerson(person)
+        person.removeItem(item)
+    }
+
+    override fun hashCode(): Int = 31 * id.hashCode() * name.hashCode() * people.hashCode() * items.hashCode()
 }
