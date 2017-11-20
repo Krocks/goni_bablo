@@ -38,13 +38,13 @@ class AddItemFragment : Fragment() {
 
     private fun initUI() {
         val session = getSession()
-        val layoutForPople = view!!.findViewById<LinearLayout>(R.id.add_item_layout)
+        val layoutForPeople = view!!.findViewById<LinearLayout>(R.id.add_item_layout)
         for (person in session.people) {
-            val personLayout = layoutInflater.inflate(R.layout.view_add_item_person, layoutForPople, false)
+            val personLayout = layoutInflater.inflate(R.layout.view_add_item_person, layoutForPeople, false)
             val tvName = personLayout!!.findViewById<TextView>(R.id.add_item_person_name)
             tvName.text = person.name
             map.put(person, personLayout)
-            layoutForPople.addView(personLayout)
+            layoutForPeople.addView(personLayout)
         }
         val btnAdd = view!!.findViewById<Button>(R.id.add_item_add)
         btnAdd.setOnClickListener({ addItem(session) })
