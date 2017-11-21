@@ -1,7 +1,8 @@
-package com.bablo.goni.gonibablo
+package com.bablo.goni.gonibablo.di
 
 
 import android.app.Application
+import com.bablo.goni.gonibablo.BuildConfig
 
 import timber.log.Timber
 
@@ -10,6 +11,13 @@ import timber.log.Timber
  */
 
 class MyApp : Application() {
+
+    val component: AppComponent by lazy {
+        DaggerAppComponent
+                .builder()
+                .appModule(AppModule(this))
+                .build()
+    }
 
     override fun onCreate() {
         super.onCreate()

@@ -1,5 +1,8 @@
 package com.bablo.goni.gonibablo.model
 
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
@@ -8,22 +11,23 @@ import kotlin.collections.ArrayList
  * Created by Serhii_Bondarenko3 on 13-Nov-17.
  */
 val MAX = 20
-fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) +  start
-fun getSampleSession ():Session{
-    val session : Session
+
+fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
+fun getSampleSession(): Session {
+    val session: Session
     val items = ArrayList<Item>()
     val people = ArrayList<Person>()
     for (i in 0..MAX) {
-        val item = Item("Item" + i, "Item" + i, ArrayList(), 5f)
-        val person = Person("Person" + i, "Person" + i, ArrayList())
+        val item = Item(i.toLong(), "Item" + i, ArrayList(), 5f)
+        val person = Person(i.toLong(), "Person" + i, ArrayList())
         item.addPerson(person)
         items.add(item)
         person.addItem(item)
         people.add(person)
     }
 
-    for (i in 0 until items.size){
-        if ((0..10).random() > 3){
+    for (i in 0 until items.size) {
+        if ((0..10).random() > 3) {
             val rand1 = (0..MAX).random()
             val rand2 = (0..MAX).random()
             people[rand1].addItem(items[rand2])
@@ -31,11 +35,17 @@ fun getSampleSession ():Session{
         }
     }
 
-    session = Session("ID", "Name", people, items)
+    session = Session(0L, "Name", people, items)
     return session
 }
-data class Session(val id: String, var name: String, val people: ArrayList<Person>, val items: ArrayList<Item>) : Serializable{
-    fun add (item: Item, person: Person){
+
+@Entity(tableName = "session")
+data class Session(@ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
+                   @ColumnInfo(name = "session_name") var name: String,
+                   @ColumnInfo(name = "session_people") val people: ArrayList<Person>,
+                   @ColumnInfo(name = "session_items") val items: ArrayList<Item>) : Serializable {
+
+    fun add(item: Item, person: Person) {
         item.addPerson(person)
         person.addItem(item)
     }
@@ -49,12 +59,12 @@ data class Session(val id: String, var name: String, val people: ArrayList<Perso
 //        }
 //    }
 
-    fun connect(item: Item, person: Person){
+    fun connect(item: Item, person: Person) {
         item.addPerson(person)
         person.addItem(item)
     }
 
-    fun disconnect(item: Item, person: Person){
+    fun disconnect(item: Item, person: Person) {
         item.removePerson(person)
         person.removeItem(item)
     }

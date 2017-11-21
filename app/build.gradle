@@ -22,7 +22,12 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -42,11 +47,14 @@ dependencies {
     implementation 'android.arch.lifecycle:runtime:1.0.3' //Lifecycle
     implementation 'android.arch.lifecycle:extensions:1.0.0' //LiveData, ViewModel
     implementation 'android.arch.persistence.room:runtime:1.0.0' //Room
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
     //logging
     implementation 'com.jakewharton.timber:timber:4.6.0'
+
     //DI
-    implementation 'com.google.dagger:dagger-android-support:2.11'
+    kapt 'com.google.dagger:dagger-compiler:2.11'
+    implementation 'com.google.dagger:dagger:2.11'
 
     //Inject
     implementation 'com.jakewharton:butterknife:8.8.1'
