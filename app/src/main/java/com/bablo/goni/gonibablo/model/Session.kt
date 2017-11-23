@@ -2,6 +2,7 @@ package com.bablo.goni.gonibablo.model
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 import java.util.*
@@ -40,10 +41,12 @@ fun getSampleSession(): Session {
 }
 
 @Entity(tableName = "session")
-data class Session(@ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val id: Long,
-                   @ColumnInfo(name = "session_name") var name: String,
-                   @ColumnInfo(name = "session_people") val people: ArrayList<Person>,
-                   @ColumnInfo(name = "session_items") val items: ArrayList<Item>) : Serializable {
+data class Session(@ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var id: Long = 0,
+                   @ColumnInfo(name = "session_name") var name: String = "",
+//                   @ColumnInfo(name = "session_people") val people: ArrayList<Person>,
+                   @Ignore val people: ArrayList<Person> = ArrayList(),
+//                   @ColumnInfo(name = "session_items") val items: ArrayList<Item>) : Serializable {
+                   @Ignore val items: ArrayList<Item> = ArrayList()) : Serializable {
 
     fun add(item: Item, person: Person) {
         item.addPerson(person)

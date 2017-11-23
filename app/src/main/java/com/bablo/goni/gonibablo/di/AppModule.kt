@@ -16,8 +16,13 @@ import javax.inject.Singleton
     fun provideApplication() = app
 
     @Provides @Singleton
-    fun provideDataBase(context: Context) : AppDataBase = Room.databaseBuilder(context, AppDataBase::class.java, "db_name").allowMainThreadQueries().build()
+    fun provideAppDataBase(context: Context) : AppDataBase = Room.databaseBuilder(context, AppDataBase::class.java, "db_name")
+            .allowMainThreadQueries()
+            .build()
 
     @Provides @Singleton
     fun provideDao (dataBase: AppDataBase) : SomeDao = dataBase.someDao()
+
+    @Provides
+    fun provideContext(): Context = app.applicationContext
 }

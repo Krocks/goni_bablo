@@ -12,15 +12,19 @@ import timber.log.Timber
 
 class MyApp : Application() {
 
-    val component: AppComponent by lazy {
-        DaggerAppComponent
-                .builder()
-                .appModule(AppModule(this))
-                .build()
+    companion object {
+        //platformStatic allow access it from java code
+        @JvmStatic lateinit var graph: AppComponent
     }
+
+
 
     override fun onCreate() {
         super.onCreate()
+
+        graph = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+        graph.inject(this)
+
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }

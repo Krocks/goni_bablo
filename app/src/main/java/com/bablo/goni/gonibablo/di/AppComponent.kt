@@ -1,5 +1,6 @@
 package com.bablo.goni.gonibablo.di
 
+import com.bablo.goni.gonibablo.ui.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,4 +11,5 @@ import javax.inject.Singleton
 @Component (modules = arrayOf(AppModule::class))
 interface AppComponent {
     fun inject(app : MyApp)
+    fun inject(activity : MainActivity)
 }
