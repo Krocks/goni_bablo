@@ -22,9 +22,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main2)
         MyApp.graph.inject(this)
         val incomingSession = getSampleSession()
-        dao.saveSession(incomingSession)
+//        dao.saveSession(incomingSession)
+//        for (item in incomingSession.items){
+//            dao.saveItem(item)
+//        }
+//        incomingSession.items[0].sessionId = incomingSession.id
+//        dao.saveItem(incomingSession.items[0])
 
-        val temSes = dao.getAllSessions()
+        val temSes = dao.getAllSessions()[0]
+//        val items = dao.getSessionById(temSes.id)
+        temSes.items.add(incomingSession.items[0])
+        temSes.items[0].sessionId = temSes.id
+        dao.saveItem(temSes.items[0])
+
         Timber.d(temSes.toString())
     }
 

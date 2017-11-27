@@ -2,19 +2,27 @@ package com.bablo.goni.gonibablo.arch.room
 
 import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
+import com.bablo.goni.gonibablo.model.Item
 import com.bablo.goni.gonibablo.model.Session
 
 /**
  * Created by Serhii_Bondarenko3 on 21-Nov-17.
  */
-@Dao interface SomeDao{
+@Dao
+interface SomeDao {
 
     @Query("select * from session")
-    fun getAllSessions():List<Session>
+    fun getAllSessions(): List<Session>
 
-//    @Query("select * from session where id = :p0") //maybe still exists
+    //    @Query("select * from session where id = :p0") //maybe still exists
     @Query("select * from session where id = :id")
-    fun getSessionById(id : Long) : Session
+    fun getSessionById(id: Long): Session
+
+    @Query("select * from item where session_id = :sessionId")
+    fun getItemForSessionId(sessionId: Long): List<Item>
+
+    @Insert(onConflict = REPLACE)
+    fun saveItem(item : Item)
 
     @Insert(onConflict = REPLACE)
     fun saveSession(session: Session)

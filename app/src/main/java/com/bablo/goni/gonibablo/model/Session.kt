@@ -1,9 +1,6 @@
 package com.bablo.goni.gonibablo.model
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
@@ -19,7 +16,7 @@ fun getSampleSession(): Session {
     val items = ArrayList<Item>()
     val people = ArrayList<Person>()
     for (i in 0..MAX) {
-        val item = Item(i.toLong(), "Item" + i, ArrayList(), 5f)
+        val item = Item(i.toLong(), "Item" + i, people = ArrayList(), price = 5f)
         val person = Person(i.toLong(), "Person" + i, ArrayList())
         item.addPerson(person)
         items.add(item)
@@ -36,13 +33,16 @@ fun getSampleSession(): Session {
         }
     }
 
-    session = Session(0L, "Name", people, items)
+    session = Session(0L, "Name", people = people, items = items)
     return session
 }
 
-@Entity(tableName = "session")
-data class Session(@ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var id: Long = 0,
-                   @ColumnInfo(name = "session_name") var name: String = "",
+//@Entity(tableName = "session")
+@Entity
+
+data class Session(@PrimaryKey(autoGenerate = true) var id: Long = 0,
+                   var name: String = "",
+//                   var session_id: Long = 0,
 //                   @ColumnInfo(name = "session_people") val people: ArrayList<Person>,
                    @Ignore val people: ArrayList<Person> = ArrayList(),
 //                   @ColumnInfo(name = "session_items") val items: ArrayList<Item>) : Serializable {

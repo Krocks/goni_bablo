@@ -1,8 +1,6 @@
 package com.bablo.goni.gonibablo.model
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 
 /**
  * Created by Serhii_Bondarenko3 on 13-Nov-17.
@@ -25,12 +23,15 @@ import android.arch.persistence.room.PrimaryKey
 //    override fun hashCode(): Int = 31 * id.hashCode() * name.hashCode() * price.hashCode()
 //    override fun toString(): String = "Item " + id + name + price
 //}
+
+@Entity(foreignKeys = arrayOf(ForeignKey(entity = Session::class, parentColumns = arrayOf("id"), childColumns = arrayOf("session_id"), onDelete = ForeignKey.CASCADE)))
 data class Item(
-        val id: Long = 0,
-        var name: String,
-        val people: ArrayList<Person> = ArrayList(),
-        var price: Float,
-        var payedBy: ArrayList<Person> = ArrayList()) {
+        @PrimaryKey(autoGenerate = true) var id: Long = 0,
+        var name: String = "",
+        @ColumnInfo(name = "session_id")var sessionId: Long = 0,
+        @Ignore val people: ArrayList<Person> = ArrayList(),
+        var price: Float = 0F,
+        @Ignore var payedBy: ArrayList<Person> = ArrayList()) {
     fun addPerson(person: Person) {
         people.add(person)
     }
